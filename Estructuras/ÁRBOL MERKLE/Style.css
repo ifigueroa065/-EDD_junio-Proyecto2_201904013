@@ -1,0 +1,23 @@
+.contenedor-completo{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.contenedor.primario{
+   width: 100%; 
+}
+.contenedor.secundario{
+    width: 100%;
+}
+
+#Z0{
+    height: 2000px;
+    width: 1800px;
+    background-color: rgb(88, 121, 243);
+}
+#b0{
+    height: 2000px;
+    width: 1800px;
+    background-color: rgb(88, 121, 243);
+}
+
+
