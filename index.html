@@ -170,7 +170,7 @@
           <nav class="navbar navbar-expand-lg custom_nav-container ">
             <a class="navbar-brand" >
               <span> 
-                CatsBooks
+                MovieCats
               </span>
             </a>
   
@@ -219,9 +219,10 @@
             </div>
   
             <center>
-              <button  type="button"  class="btn btn-success" id="cargar_libs">LIBROS </button>
-              <button type="button" class="btn btn-danger" id="cargar_aut">AUTORES</button>
-              <button type="button" class="btn btn-warning" id="cargar_user" >USUARIOS</button>
+              <button  type="button"  class="btn btn-success" id="cargar_pelis">PELÍCULAS </button>
+              <button type="button" class="btn btn-danger" id="cargar_act">ACTORES</button>
+              <button type="button" class="btn btn-warning" id="cargar_client" >CLIENTES</button>
+              <button type="button" class="btn btn-warning" id="cargar_cat" >CATEGORIAS</button>
   
               
             </center>
@@ -305,8 +306,8 @@
                           <input type="password" id="l_pass" class="form-control form-control-lg" />
                           <label class="form-label" for="form2Example27"> Contraseña</label>
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
+                            <input class="form-check-input" type="checkbox" id="checkbotx" name="checkbotx">
+                            <label class="form-check-label" for="defaultCheck1" >
                               Administrador
                             </label>
                           </div>
@@ -801,7 +802,9 @@
   <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
 
   <!-- SCRIPTS DE ESTRUCTURAS --> 
-  
+  <script src="Backend/Scripts/Peliculas.js"></script>
+  <script src="Backend/Scripts/Clientes.js"></script>
+  <script src="Backend/Scripts/Cargas.js"></script>
   
 
   <script>
@@ -825,7 +828,6 @@
       
       document.getElementById("ADMINISTRADOR").style.display="none";
       document.getElementById("USUARIO").style.display="none";
-      
       document.getElementById("REGISTRO").style.display="none";
     
     }
@@ -842,7 +844,7 @@
   
       document.getElementById("ADMINISTRADOR").style.display = "none";
       document.getElementById("INIT").style.display="block";
-      document.getElementById("TOPS").style.display="block";
+      document.getElementById("LOGIN").style.display="block";
 
 
     }
@@ -851,7 +853,7 @@
   
       document.getElementById("USUARIO").style.display = "none";
       document.getElementById("INIT").style.display="block";
-      document.getElementById("TOPS").style.display="block";
+      document.getElementById("LOGIN").style.display="block";
 
 
     }

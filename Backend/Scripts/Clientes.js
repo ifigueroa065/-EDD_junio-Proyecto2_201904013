@@ -1,7 +1,12 @@
-class Node {
+class Node_Simple {
    
-    constructor(value){
-        this.value = value
+    constructor(dpi,nombre_completo,nombre_usuario,correo,contra,telefono){
+        this.dpi = dpi
+        this.nombre_completo=nombre_completo
+        this.nombre_usuario=nombre_usuario
+        this.correo=correo
+        this.contra=contra
+        this.telefono=telefono
         this.next = null
     }
 }
@@ -15,8 +20,8 @@ class Queue {
         this.size = 0
     }
     
-    encolar(val){
-        var newNode = new Node(val)
+    encolar(dpi,nombre_completo,nombre_usuario,correo,contra,telefono){
+        var newNode = new Node_Simple(dpi,nombre_completo,nombre_usuario,correo,contra,telefono)
         if(!this.first){
             this.first = newNode
             this.last = newNode
@@ -36,17 +41,17 @@ class Queue {
         }
         this.first = this.first.next
         this.size--
-        return temp.value
+        return temp.dpi
     }
 
     mostrar(){
         var temp = this.first
 
         while(temp!=null){
-            console.log(temp.value)
+            console.log(temp.nombre_usuario)
             temp=temp.next
         }
-        console.log("Primero: "+this.first.value)
+        console.log("Primero: "+this.first.nombre_usuario)
     }
 
     graficar(){
@@ -59,7 +64,7 @@ class Queue {
         var numnodo= 0;
         
         while (temporal != null) {
-            nodos+=  "N" + numnodo + "[label=\"" + temporal.value + "\" ];\n"
+            nodos+=  "N" + numnodo + "[label=\"" + temporal.nombre_usuario + "\" ];\n"
             if(temporal.next != null){
                 var auxnum = numnodo+1
                 conexiones += "N" + numnodo + " -> N" + auxnum + ";\n"
@@ -83,16 +88,36 @@ class Queue {
         var aux= this.first
         for (var i = 0; i < this.size; i++) { 
               for (var j = 0; j < (this.size - i - 1); j++) { 
-                    if(aux.value > aux.next.value) {
-                        var tmp = aux.value; 
-                        aux.value = aux.next.value; 
-                        aux.next.value = tmp; 
+                    if(aux.nombre_completo > aux.next.nombre_completo) {
+                        var tmp = aux.nombre_completo; 
+                        aux.nombre_completo = aux.next.nombre_completo; 
+                        aux.next.nombre_completo = tmp; 
                 }
             }        
         }
     }
+
+    isExiste(user,pass){
+        
+        var cont =0; 
+        var temporal = this.first
+
+        while(cont<this.size){
+            if (user==temporal.nombre_usuario && pass==temporal.contrasenia) {
+                //si existe verifico el rol
+                return true
+                
+            }
+            temp=temp.next
+            cont++;
+        }
+    
+        return false
+        
+    }
 }
 
+/** 
 const quickQueue = new Queue
 
 quickQueue.encolar("MarthaCerda")
@@ -108,4 +133,6 @@ console.log("_____________________ BUBBLE _____________________")
 quickQueue.bubbleSort()
 quickQueue.mostrar()
 quickQueue.graficar()
+
+*/
 
