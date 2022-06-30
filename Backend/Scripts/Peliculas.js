@@ -1,10 +1,10 @@
 class Nodo_AVL {
-    constructor(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio){
+    constructor(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio_Q){
         this.id_pelicula=id_pelicula;
         this.nombre_pelicula=nombre_pelicula
         this.descripcion=descripcion
         this.puntuacion=puntuacion
-        this.precio=precio
+        this.precio_Q=precio_Q
         this.prev = null;
         this.next = null;
         this.altura = 0;
@@ -66,13 +66,13 @@ class AVL {
         return nodo.altura;
     }
     //insertar
-    insertar(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio){
-        this.raiz = this.add(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio,this.raiz)
+    insertar(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio_Q){
+        this.raiz = this.add(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio_Q,this.raiz)
 
     }
     //insertar recursivo
-    add(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio, nodo){
-        if(nodo == null) return new Nodo_AVL(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio);
+    add(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio_Q, nodo){
+        if(nodo == null) return new Nodo_AVL(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio_Q);
         else{
             if(id_pelicula < nodo.id_pelicula){
                 nodo.prev = this.add(id_pelicula, nodo.prev)
@@ -181,6 +181,52 @@ class AVL {
     obtener_codigo_Graphviz(){
         return this.raiz.graficar()
     }
+
+
+    rebuscar(value){
+        if (this.raiz==null) {
+            return null
+        }
+      
+          var aux = this.raiz
+          if (aux.id_pelicula === value) {
+            return null
+          }
+      
+          while(aux) {
+            // si encontramos el nodo con el valor
+            // paramos de iterar.
+            if (aux.id_pelicula === value) {
+              break
+            }
+            // seguimos buscando a la derecha
+            if (aux.id_pelicula < value) {
+              aux = aux.next
+            } else if (aux.id_pelicula > value) {
+              // seguimos buscando a la izquierda
+              aux = aux.prev
+            }
+          }
+          // retornamos el nodo encontrado.
+          // si no encontramos el nodo con el valor
+          // aux, toma el valor null.
+          return aux
+    }
+    buscar(value){
+       
+        console.log("_______ RESULTADO DE BÚSQUEDA ___________")
+        var x = this.rebuscar(value)
+        if (x!=null) {
+            console.log("El valor ya existe")
+            return true 
+        }else{
+            return false
+        }
+
+            
+        
+    }
+    
     
 }
 

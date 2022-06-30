@@ -1,11 +1,11 @@
 class Node_Simple {
    
-    constructor(dpi,nombre_completo,nombre_usuario,correo,contra,telefono){
+    constructor(dpi,nombre_completo,nombre_usuario,correo,contrasenia,telefono){
         this.dpi = dpi
         this.nombre_completo=nombre_completo
         this.nombre_usuario=nombre_usuario
         this.correo=correo
-        this.contra=contra
+        this.contrasenia=contrasenia
         this.telefono=telefono
         this.next = null
     }
@@ -20,8 +20,8 @@ class Queue {
         this.size = 0
     }
     
-    encolar(dpi,nombre_completo,nombre_usuario,correo,contra,telefono){
-        var newNode = new Node_Simple(dpi,nombre_completo,nombre_usuario,correo,contra,telefono)
+    encolar(dpi,nombre_completo,nombre_usuario,correo,contrasenia,telefono){
+        var newNode = new Node_Simple(dpi,nombre_completo,nombre_usuario,correo,contrasenia,telefono)
         if(!this.first){
             this.first = newNode
             this.last = newNode

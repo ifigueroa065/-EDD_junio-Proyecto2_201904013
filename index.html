@@ -109,10 +109,10 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                      Libros
+                      
                     </h1>
                     <p>
-                      Doloremque, itaque aperiam facilis rerum
+                        Encuentra tus peliculas
                     </p>
                     
                   </div>
@@ -126,10 +126,10 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                      Revistas
+                      
                     </h1>
                     <p>
-                      Doloremque, itaque aperiam facilis rerum
+                      Adquiere tu pase VIP
                     </p>
                    
                   </div>
@@ -183,14 +183,12 @@
                 <li class="nav-item active">
                   <a class="nav-link">Inicio<span class="sr-only">(current)</span></a>
                 </li>
+                
                 <li class="nav-item">
-                  <a  class="nav-link js-scroll-trigger" href="#libros">Libros</a>
+                  <a  class="nav-link js-scroll-trigger" href="#blockchain">Blockchain</a>
                 </li>
                 <li class="nav-item">
-                  <a  class="nav-link js-scroll-trigger" href="#usuarios">Usuarios</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="#pendientes">Pendientes</a>
+                  <a class="nav-link js-scroll-trigger" href="#grafos">Grafos</a>
                 </li>
                 
               </ul>
@@ -220,9 +218,9 @@
   
             <center>
               <button  type="button"  class="btn btn-success" id="cargar_pelis">PELÍCULAS </button>
-              <button type="button" class="btn btn-danger" id="cargar_act">ACTORES</button>
-              <button type="button" class="btn btn-warning" id="cargar_client" >CLIENTES</button>
-              <button type="button" class="btn btn-warning" id="cargar_cat" >CATEGORIAS</button>
+              <button type="button" class="btn btn-success" id="cargar_act">ACTORES</button>
+              <button type="button" class="btn btn-success" id="cargar_client" >CLIENTES</button>
+              <button type="button" class="btn btn-success" id="cargar_cat" >CATEGORIAS</button>
   
               
             </center>
@@ -231,27 +229,78 @@
       
       
     </section>
-    <div class="p-3 mb-2 bg-white text-dark" id="usuarios">
-      
-      USUARIOS
+    <div class="p-3 mb-2 bg-dark text-white" id="blockchain">
+      <!-- SECCION DE BLOCKCHAIN -->
+      <h4 class="my-5 display-3 fw-bold ls-tight">
+               
+        <span class="text-primary">BLOCKCHAIN</span>
+      </h4>
       <div class="pt-1 mb-4">
-        <button class="btn btn-dark btn-lg btn-block" type="button" id="ver_usuarios">Ver</button>
+
+        <div class="form-outline mb-4">
+          <input type="text"  class="form-control form-control-lg" />
+          <label class="form-label" for="form2Example17"> Segundos</label>
+        </div>
+        <button class="btn btn-dark btn-lg btn-block" type="button" id="ver_usuarios">MODIFICAR TIEMPO</button>
+        <button class="btn btn-dark btn-lg btn-block" type="button" id="ver_usuarios">GENERAR BLOQUE</button>
       </div>
+      <div class="container" id="lienzo">
+          
+
+      </div>
+
+      <h4 class="my-5 display-3 fw-bold ls-tight">
+               
+        <span class="text-primary">ÁRBOL MERKLE</span>
+      </h4>
+
       <div class="container" id="lienzo">
           
 
       </div>
     </div>
 
-    <div class="p-3 mb-2 bg-dark text-white" id="pendientes">
+    <div class="p-3 mb-2 bg-dark text-white" id="grafos">
+      <!-- SECCION DE GRAFOS -->
       
-      PENDIENTES
-      <div class="pt-1 mb-4">
-        <button class="btn btn-dark btn-lg btn-block" type="button" id="ver_pendientes">Ver</button>
-      </div>
-      <div class="container" id="lienzo2">
+      <div class="contenedor-completo">
+        <div class="contenedor-primario" id="contenedor1">
+            <CENTER>
+                <div class="p-3 mb-2 bg-dark text-white">
+                  <h4 class="my-5 display-3 fw-bold ls-tight">
+               
+                    <span class="text-primary">GRAFOS</span>
+                  </h4>
+                  </div>
+
+                  <br>
+                  <br>
+                  <br>
+                  <button class="btn btn-dark btn-lg btn-block" type="button" id="ver_usuarios">PELICULAS</button>
+                  <button class="btn btn-dark btn-lg btn-block" type="button" id="ver_usuarios">CLIENTES</button>
+                  <button class="btn btn-dark btn-lg btn-block" type="button" id="ver_usuarios">ACTORES</button>
+                  <button class="btn btn-dark btn-lg btn-block" type="button" id="ver_usuarios">CATEGORIAS</button>
+                  
+            </CENTER>
+            
+        </div>
+        <div class="contenedor-secundario" id="contenedor2">
+            <CENTER>
+                <div class="p-3 mb-2 bg-dark text-white"> 
+                 <h3> </h3></div>
+
+                <div  id="scroll">
         
-      </div>
+                  <img src="images/img9.jpg">
+                </div>
+                <br> 
+                <button type="button" class="btn btn-success" id="cargar_cat" >DESCARGAR</button>
+
+            </CENTER>
+            
+        </div>
+    </div>
+      
       
           
       

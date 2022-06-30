@@ -6,6 +6,24 @@ body {
   overflow-x: hidden;
 }
 
+.contenedor-completo{
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+.contenedor.primario{
+ width: 100%; 
+}
+.contenedor.secundario{
+  width: 100%;
+}
+
+#scroll{
+  height: 700px;
+  width: 700px;
+  overflow: auto;
+}
+
 #lienzo{
   height: 900px;
     width: 1800px;

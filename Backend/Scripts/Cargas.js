@@ -29,7 +29,7 @@
     //DECLARANDO ESTRUCTURAS GLOBALES
     var ClientList = new Queue()
     var MoviesList = new AVL()
-    
+    var ActoresList = new Arbol_Binario()
 
 
     //DECLARANDO ADMINISTRADOR POR DEFECTO
@@ -109,14 +109,17 @@
             console.log(jsonData[index].puntuacion_star);
             console.log(jsonData[index].precion_Q);
             
+            if (MoviesList.buscar(jsonData[index].id_pelicula)!=true) {
+                //Guardando Peliculas
+                MoviesList.insertar(jsonData[index].id_pelicula,
+                    jsonData[index].nombre_pelicula,
+                    jsonData[index].descripcion,
+                    jsonData[index].puntuacion_star,
+                    jsonData[index].precion_Q
+                )    
+            }
 
-            //Guardando Peliculas
-            MoviesList.insertar(jsonData[index].id_pelicula,
-                jsonData[index].nombre_pelicula,
-                jsonData[index].descripcion,
-                jsonData[index].puntuacion_star,
-                jsonData[index].precion_Q
-            )
+            
 
             
             opciones.innerHTML+=`
@@ -187,7 +190,7 @@
 
             
         //Autores_BST.agregar()
-        alert("Carga de libros exitosa :)")
+        alert("Carga de Peliculas exitosa :)")
         
     }
 
@@ -199,29 +202,24 @@
         //console.log(text)
         console.log(jsonData)
         for (let index = 0; index < jsonData.length; index++) {
-            console.log("__________ DATOS DEL AUTOR "+(index+1)+" __________")
+            console.log("__________ DATOS DEL CLIENTE "+(index+1)+" __________")
             console.log(jsonData[index].dpi);
-            console.log(jsonData[index].nombre_autor);
+            console.log(jsonData[index].nombre_completo);
+            console.log(jsonData[index].nombre_usuario);
             console.log(jsonData[index].correo);
+            console.log(jsonData[index].contrasenia);
             console.log(jsonData[index].telefono);
-            console.log(jsonData[index].direccion);
-            console.log(jsonData[index].biografia);
-            Autores_BST.agregar(jsonData[index].dpi,
-                jsonData[index].nombre_autor,
+
+            ClientList.encolar(jsonData[index].dpi,
+                jsonData[index].nombre_completo,
+                jsonData[index].nombre_usuario,
                 jsonData[index].correo,
-                jsonData[index].direccion,
-                jsonData[index].telefono,
-                jsonData[index].biografia)
+                jsonData[index].contrasenia,
+                jsonData[index].telefono)
         }
 
-        console.log("Metodo preorden:\n")
-        Autores_BST.pre_orden()
-        d3.select("#lienzo").graphviz()
-            .width(1200)
-            .height(500)
-            .renderDot(Autores_BST.obtener_codigo_Graphviz())
         
-        alert("Carga de autores exitosa :)")
+        alert("Carga de CLIENTES exitosa :)")
     }
 
     async function enviar2(e){
@@ -232,22 +230,26 @@
         //console.log(text)
         console.log(jsonData)
         for (let index = 0; index < jsonData.length; index++) {
-            UserList.add(jsonData[index].dpi,
-                jsonData[index].nombre_completo,
-                jsonData[index].nombre_usuario,
+
+            console.log("__________ DATOS DEL ACTORES "+(index+1)+" __________")
+            console.log(jsonData[index].dni);
+            console.log(jsonData[index].nombre_actor);
+            console.log(jsonData[index].correo);
+            console.log(jsonData[index].descripcion);
+            
+
+            ActoresList.agregar(jsonData[index].dni,
+                jsonData[index].nombre_actor,
                 jsonData[index].correo,
-                jsonData[index].rol,
-                jsonData[index].contrasenia,
-                jsonData[index].telefono
+                jsonData[index].descripcion
                 )
         }
-        UserList.mostrar()
 
-        alert("Carga de usuarios exitosa :)")
+        alert("Carga de ACTORES exitosa :)")
         
     }
 
-    async function envia3(e){
+    async function enviar3(e){
         var text = e.target.result;
         var jsonData = JSON.parse(text);
         //var x= document.getElementById("content");
@@ -255,6 +257,14 @@
         //console.log(text)
         console.log(jsonData)
         for (let index = 0; index < jsonData.length; index++) {
+
+            console.log("__________ DATOS DE CATEGORIA "+(index+1)+" __________")
+            console.log(jsonData[index].dni);
+            console.log(jsonData[index].nombre_actor);
+            console.log(jsonData[index].correo);
+            console.log(jsonData[index].descripcion);
+
+
             UserList.add(jsonData[index].dpi,
                 jsonData[index].nombre_completo,
                 jsonData[index].nombre_usuario,
