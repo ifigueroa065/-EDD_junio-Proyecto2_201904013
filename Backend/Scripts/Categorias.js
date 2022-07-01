@@ -40,6 +40,17 @@ class Cola {
         return temp.value
     }
 
+    verificar(id){
+        var temp = this.first
+
+        while(temp!=null){
+            if(id==temp.id_categoria){
+                return true
+            }
+            temp=temp.next
+        }
+        return false
+    }
     mostrar(){
         var temp = this.first
 
@@ -127,7 +138,7 @@ class HashTable {
         this.size = 0
 
         //acá lleno los espacios disponibles
-        while (this.size<13) {
+        while (this.size<20) {
             this.encolar(this.size)
         }
     }
@@ -164,6 +175,19 @@ class HashTable {
             temp=temp.next
         }
         console.log("Primero: "+this.first.value)
+    }
+    isExiste(id){
+
+        var temp = this.first
+
+        while(temp!=null){
+            //verifico cada index
+            if(temp.enlazado.verificar(id)==true){
+                return true
+            }
+            temp=temp.next
+        } 
+        return false
     }
 
     graficar_hash(){

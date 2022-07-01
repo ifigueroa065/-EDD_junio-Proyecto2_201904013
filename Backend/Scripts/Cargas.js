@@ -6,21 +6,7 @@
     document.getElementById("cargar_cat").onclick = loadfile3;
     
     document.getElementById("logearse").onclick= logear;
-    document.getElementById("ver_pendientes").onclick= ver_cola;
-    document.getElementById("ver_usuarios").onclick= ver_circular;
-    document.getElementById("ver_fantasia").onclick= cargar;
-
-    document.getElementById("bubblesort").onclick= mostrarbubblesort;
-    document.getElementById("quicksort").onclick= mostrarquicksort;
-
-    document.getElementById("libs_usuario").onclick= correrlista;
-    document.getElementById("ejemplarcito").onclick= mostrarejemplar;
     
-
-    document.getElementById("comprar").onclick= comprarLibro;
-
-    document.getElementById("s_autor").onclick= buscarAUTOR;
-    document.getElementById("mostrar_top").onclick= topsclientes;
     
 
     let archivo;
@@ -30,10 +16,10 @@
     var ClientList = new Queue()
     var MoviesList = new AVL()
     var ActoresList = new Arbol_Binario()
-
+    var CategoriasList = new HashTable()
 
     //DECLARANDO ADMINISTRADOR POR DEFECTO
-    ClientList.encolar(2354168452525,"WIlfred Perez","EDD","admin@moviecat.com","123","+502 (123) 123-4567")
+    //ClientList.encolar(2354168452525,"WIlfred Perez","EDD","admin@moviecat.com","123","+502 (123) 123-4567")
    
 
     //LECTURAS DE ARCHIVOS
@@ -102,12 +88,12 @@
           
         for (let index = 0; index < jsonData.length; index++) {
             //VERIFICAR QUE ID SEA ÚNICO
-            console.log("__________ DATOS DE LA PELÍCULA "+(index+1)+" __________")
+            console.log("____ DATOS DE LA PELÍCULA "+(index+1)+" __")
             console.log(jsonData[index].id_pelicula);
             console.log(jsonData[index].nombre_pelicula);
             console.log(jsonData[index].descripcion);
             console.log(jsonData[index].puntuacion_star);
-            console.log(jsonData[index].precion_Q);
+            console.log(jsonData[index].precio_Q);
             
             if (MoviesList.buscar(jsonData[index].id_pelicula)!=true) {
                 //Guardando Peliculas
@@ -115,13 +101,13 @@
                     jsonData[index].nombre_pelicula,
                     jsonData[index].descripcion,
                     jsonData[index].puntuacion_star,
-                    jsonData[index].precion_Q
+                    jsonData[index].precio_Q
                 )    
             }
 
             
 
-            
+            /** 
             opciones.innerHTML+=`
             <option value="${jsonData[index].nombre_libro}">
             ${jsonData[index].nombre_libro}</option>` 
@@ -140,51 +126,15 @@
                     
                     
                     </tr>`
-                //si es Fantasía lo envío a ortogonal
-                FantasyBooks.agregarnodo(jsonData[index].fila,
-                    jsonData[index].columna,
-                    jsonData[index].isbn,
-                    jsonData[index].nombre_autor,
-                    jsonData[index].nombre_libro,
-                    jsonData[index].cantidad,
-                    jsonData[index].paginas,
-                    jsonData[index].categoria
-                )
+               
                 
 
-            } 
-            if(jsonData[index].categoria=="Thriller"){
-                // si es Thriller lo envío a la dispersa
-
-                contenido_t.innerHTML+=`<tr>
-                    <th scope="row">${index}</th>
-                    <td>${jsonData[index].isbn}</td>
-                    <td>${jsonData[index].nombre_libro}</td>
-                    <td>${jsonData[index].nombre_autor}</td>
-                    <td>${jsonData[index].categoria}</td>
-                    
-                    
-                    
-                    </tr>`
-                ThrillerBooks.insert(jsonData[index].columna,
-                    jsonData[index].fila,
-                    jsonData[index].isbn,
-                    jsonData[index].nombre_autor,
-                    jsonData[index].nombre_libro,
-                    jsonData[index].cantidad,
-                    jsonData[index].paginas,
-                    jsonData[index].categoria
-                )
-            }
+            } */
+            
             
         }
         
-        //FantasyBooks.Mostrar()
-        //FantasyBooks.graficar()
-
-        //ThrillerBooks.printCols()
-        //ThrillerBooks.graph_matrix()
-
+        MoviesList.inorden()
 
             
 
@@ -217,7 +167,7 @@
                 jsonData[index].contrasenia,
                 jsonData[index].telefono)
         }
-
+        ClientList.mostrar()
         
         alert("Carga de CLIENTES exitosa :)")
     }
@@ -244,7 +194,7 @@
                 jsonData[index].descripcion
                 )
         }
-
+        ActoresList.inorden()
         alert("Carga de ACTORES exitosa :)")
         
     }
@@ -259,22 +209,17 @@
         for (let index = 0; index < jsonData.length; index++) {
 
             console.log("__________ DATOS DE CATEGORIA "+(index+1)+" __________")
-            console.log(jsonData[index].dni);
-            console.log(jsonData[index].nombre_actor);
-            console.log(jsonData[index].correo);
-            console.log(jsonData[index].descripcion);
+            console.log(jsonData[index].id_categoria);
+            console.log(jsonData[index].company);
+            var res = (jsonData[index].id_categoria)%20
 
+            if (CategoriasList.isExiste(jsonData[index].id_categoria)!=true) {
+                CategoriasList.insertarHash(res,jsonData[index].id_categoria,jsonData[index].company)
+            }
 
-            UserList.add(jsonData[index].dpi,
-                jsonData[index].nombre_completo,
-                jsonData[index].nombre_usuario,
-                jsonData[index].correo,
-                jsonData[index].rol,
-                jsonData[index].contrasenia,
-                jsonData[index].telefono
-                )
+           
         }
-        UserList.mostrar()
+        CategoriasList.graficar_hash()
 
         alert("Carga de usuarios exitosa :)")
         
@@ -283,43 +228,48 @@
 
     function logear() {
         //console.log("esta es la lista de usuarios actual")
-        //UserList.mostrar()
+        //ClientList.mostrar()
 
         var user  =document.getElementById("l_usuario").value
         var pass = document.getElementById("l_pass").value
         var elche = document.querySelector("#checkbotx").checked
         console.log("user :"+ user + " pass : " + pass + " check: "+elche)
         //VALIDACIONES
+        
+            if (elche==true) {
+                //si dice que es admin
+                if(user=="EDD" && pass=="123"){
+                    usuarioactual=user;
+                    document.getElementById("ADMINISTRADOR").style.display="block";
+                    document.getElementById("LOGIN").style.display = "none";
+                    document.getElementById("INIT").style.display = "none";
+                    document.getElementById("l_usuario").value=""
+                    document.getElementById("l_pass").value=""
+                }else{
+                    alert("Credenciales Incorrectas")
+                    document.getElementById("l_usuario").value=""
+                    document.getElementById("l_pass").value=""  
+                }
 
-        if (elche==true) {
-            //si dice que es admin
-            if(user=="EDD" && pass=="123"){
-                usuarioactual=user;
-                document.getElementById("ADMINISTRADOR").style.display="block";
-                document.getElementById("LOGIN").style.display = "none";
-                document.getElementById("INIT").style.display = "none";
-                document.getElementById("l_usuario").value=""
-                document.getElementById("l_pass").value=""
-            }else{
-                alert("Credenciales Incorrectas")
-                document.getElementById("l_usuario").value=""
-                document.getElementById("l_pass").value=""  
+            } else {
+                //logeo normal
+                if(ClientList.isExiste(user,pass)==true){
+                    usuarioactual=user;
+                    document.getElementById("USUARIO").style.display="block";
+                    document.getElementById("LOGIN").style.display = "none";
+                    document.getElementById("INIT").style.display = "none";
+                    document.getElementById("l_usuario").value=""
+                    document.getElementById("l_pass").value=""
+                }else{
+                    alert("Credenciales Incorrectas")
+                    document.getElementById("l_usuario").value=""
+                    document.getElementById("l_pass").value=""  
+                } 
+    
+                
             }
-        } else {
-            //logeo normal
-            if(ClientList.isExiste(user,pass)==true){
-                usuarioactual=user;
-                document.getElementById("USUARIO").style.display="block";
-                document.getElementById("LOGIN").style.display = "none";
-                document.getElementById("INIT").style.display = "none";
-                document.getElementById("l_usuario").value=""
-                document.getElementById("l_pass").value=""
-            }else{
-                alert("Credenciales Incorrectas")
-                document.getElementById("l_usuario").value=""
-                document.getElementById("l_pass").value=""  
-            }
-        }
+        
+        
 
                        
     }

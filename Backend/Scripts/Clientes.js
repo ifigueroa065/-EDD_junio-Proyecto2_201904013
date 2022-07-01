@@ -31,6 +31,10 @@ class Queue {
         }
         return ++this.size
     }
+    
+    verifica(){
+        return this.size
+    }
 
     desencolar(){
         if(!this.first) return null
@@ -108,7 +112,7 @@ class Queue {
                 return true
                 
             }
-            temp=temp.next
+            temporal=temporal.next
             cont++;
         }
     

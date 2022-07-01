@@ -1,9 +1,9 @@
 class Nodo_AVL {
-    constructor(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio_Q){
+    constructor(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q){
         this.id_pelicula=id_pelicula;
         this.nombre_pelicula=nombre_pelicula
         this.descripcion=descripcion
-        this.puntuacion=puntuacion
+        this.puntuacion=puntuacion_star
         this.precio_Q=precio_Q
         this.prev = null;
         this.next = null;
@@ -66,16 +66,16 @@ class AVL {
         return nodo.altura;
     }
     //insertar
-    insertar(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio_Q){
-        this.raiz = this.add(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio_Q,this.raiz)
+    insertar(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q){
+        this.raiz = this.add(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q,this.raiz)
 
     }
     //insertar recursivo
-    add(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio_Q, nodo){
-        if(nodo == null) return new Nodo_AVL(id_pelicula,nombre_pelicula,descripcion,puntuacion,precio_Q);
+    add(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q, nodo){
+        if(nodo == null) return new Nodo_AVL(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q);
         else{
             if(id_pelicula < nodo.id_pelicula){
-                nodo.prev = this.add(id_pelicula, nodo.prev)
+                nodo.prev = this.add(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q, nodo.prev)
                 if(this.altura(nodo.next)-this.altura(nodo.prev) == -2){
                     //programar los casos 
                     //rsi
@@ -88,7 +88,7 @@ class AVL {
                     
                 }
             }else if(id_pelicula > nodo.id_pelicula){
-                nodo.next = this.add(id_pelicula, nodo.next);
+                nodo.next = this.add(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q, nodo.next);
                 if(this.altura(nodo.next)-this.altura(nodo.prev)== 2){
                     //otros dos casos
                     //rotacion simple next
@@ -146,7 +146,8 @@ class AVL {
     }
     pre_orden(nodo){
         if(nodo!=null){
-            console.log("valor=" +nodo.valor);
+            console.log("id_pelicula=" +nodo.id_pelicula);
+            console.log("nombre_pelicula=" +nodo.nombre_pelicula);
             this.pre_orden(nodo.prev);
             this.pre_orden(nodo.next);
         }
@@ -160,7 +161,8 @@ class AVL {
         if(nodo!=null){
             this.post_orden(nodo.prev);
             this.post_orden(nodo.next);
-            console.log("valor=" +nodo.valor);
+            console.log("id_pelicula=" +nodo.id_pelicula);
+            console.log("nombre_pelicula=" +nodo.nombre_pelicula);
         }
     }
     //inorden
@@ -170,7 +172,9 @@ class AVL {
     in_orden(nodo){
         if(nodo!=null){
             this.in_orden(nodo.prev);
-            console.log("valor=" +nodo.valor);
+            console.log("____ DATOS DE LA PELÍCULA "+" __")
+            console.log("id_pelicula=" +nodo.id_pelicula);
+            console.log("nombre_pelicula=" +nodo.nombre_pelicula);
             this.in_orden(nodo.next);    
         }
     }
@@ -214,7 +218,7 @@ class AVL {
     }
     buscar(value){
        
-        console.log("_______ RESULTADO DE BÚSQUEDA ___________")
+        
         var x = this.rebuscar(value)
         if (x!=null) {
             console.log("El valor ya existe")

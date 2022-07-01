@@ -181,23 +181,19 @@ class AVL {
 }
 
 
-//11,23,35,46,54,26,83,20,100,54,2,1,6,8
+//50, 10, 60, 20, 70, 30, 80, 40, 90
 
 var arbolito = new AVL();
-arbolito.insertar(11);
-arbolito.insertar(23);
-arbolito.insertar(35);
-arbolito.insertar(46);
-arbolito.insertar(54);
-arbolito.insertar(26);
-arbolito.insertar(83);
+arbolito.insertar(50);
+arbolito.insertar(10);
+arbolito.insertar(60);
 arbolito.insertar(20);
-arbolito.insertar(100);
-arbolito.insertar(54);
-arbolito.insertar(2);
-arbolito.insertar(1);
-arbolito.insertar(6);
-arbolito.insertar(8);
+arbolito.insertar(70);
+arbolito.insertar(30);
+arbolito.insertar(80);
+arbolito.insertar(40);
+arbolito.insertar(90);
+
 
 console.log("Recorrido inorden")
 arbolito.inorden()
