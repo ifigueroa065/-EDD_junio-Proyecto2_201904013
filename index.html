@@ -294,7 +294,7 @@
                   
                 </div>
                 <br> 
-                <button type="button" class="btn btn-success" id="cargar_cat" >DESCARGAR</button>
+                <button type="button" class="btn btn-success" id="cargar_cat" onclick="descargarGrafo()">DESCARGAR</button>
 
             </CENTER>
             
@@ -800,8 +800,16 @@
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>   
   <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+  
 
+  <!-- SCRIPTS PARA IMAGENES  -->
+  <script src="https://superal.github.io/canvas2image/canvas2image.js "></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- SCRIPTS DE ESTRUCTURAS --> 
+
+
+  
   <script src="Backend/Scripts/SHA256.js"></script>
   <script src="Backend/Scripts/Clientes.js"></script>
   <script src="Backend/Scripts/Categorias.js"></script>
@@ -869,6 +877,15 @@
 
       console.log("libro :" + pro + " cantidad:"+a)
 
+    }
+    
+
+    function descargarGrafo() {
+      var x= "scroll"
+        html2canvas($('#' + x)[0]).then(function (canvas) {
+            return Canvas2Image.saveAsPNG(canvas);
+            $(".response").append(canvas);
+        });
     }
 
     
