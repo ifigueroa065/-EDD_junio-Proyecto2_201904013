@@ -404,13 +404,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav  mx-auto ">
                 <li class="nav-item active">
-                  <a class="nav-link" >Inicio<span class="sr-only">(current)</span></a>
+                  <a class="nav-link" onclick="ver_inicio()" >Inicio<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a  class="nav-link js-scroll-trigger" href="#CATEGORIAS">Categorías</a>
+                  <a  class="nav-link js-scroll-trigger" onclick="ver_categoria()">Categorías</a>
                 </li>
                 <li class="nav-item">
-                  <a  class="nav-link js-scroll-trigger" href="#ACTORES">Actores</a>
+                  <a  class="nav-link js-scroll-trigger" onclick="ver_Actores()">Actores</a>
                 </li>
                 
                 
@@ -437,7 +437,7 @@
       </div>
     </section>
 
-    <div class="p-3 mb-2 bg-dark text-white" >
+    <div class="p-3 mb-2 bg-dark text-white" id="section_pelis" >
         <center>
           <h4 class="my-5 display-3 fw-bold ls-tight">
                
@@ -552,42 +552,6 @@
       
     </div>
 
-    <div class="p-3 mb-2 bg-dark text-white" >
-      
-      Thriller
-      
-      <div class="p-3 mb-2 bg-dark text-white"  >
-        <div class="container" id="lienzo_thriller1">
-          
-
-        </div>
-      </div>
-      
-      <!-- TABLA DE LIBROS FANTASÍA -->
-
-      <div class="p-3 mb-2 bg-dark text-white"  >
-        <table class="table table-dark table-striped" id="table_fantasía">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">isbn</th>
-              <th scope="col">Nombre del Libro</th>
-              <th scope="col">Nombre del autor</th>
-              <th scope="col">Categoría</th>
-              
-              
-             
-            </tr>
-          </thead>
-          <tbody id="t_thriller">
-            
-            
-            
-          </tbody>
-        </table>
-      </div>
-
-    </div>
     
     <!-- INFORMACION DE UNA PELICULA -->
     <div class="p-3 mb-2 bg-dark text-white" id="INFOPELI">
@@ -886,6 +850,26 @@
             return Canvas2Image.saveAsPNG(canvas);
             $(".response").append(canvas);
         });
+    }
+
+    function ver_categoria() {
+      document.getElementById("CATEGORIAS").style.display = "block";
+      document.getElementById("ACTORES").style.display="none";
+      document.getElementById("section_pelis").style.display="none";
+      document.getElementById("INFOPELI").style.display="none";
+    }
+    function ver_Actores() {
+      document.getElementById("CATEGORIAS").style.display = "none";
+      document.getElementById("ACTORES").style.display="block";
+      document.getElementById("section_pelis").style.display="none";
+      document.getElementById("INFOPELI").style.display="none";
+    }
+
+    function ver_inicio() {
+      document.getElementById("CATEGORIAS").style.display = "none";
+      document.getElementById("ACTORES").style.display="none";
+      document.getElementById("INFOPELI").style.display="none";
+      document.getElementById("section_pelis").style.display="block";
     }
 
     

@@ -255,6 +255,10 @@
                     document.getElementById("INIT").style.display = "none";
                     document.getElementById("l_usuario").value=""
                     document.getElementById("l_pass").value=""
+                    document.getElementById("CATEGORIAS").style.display = "none";
+                    document.getElementById("ACTORES").style.display="none";
+                    document.getElementById("INFOPELI").style.display="none";
+                    document.getElementById("section_pelis").style.display="block";
                 }else{
                     alert("Credenciales Incorrectas")
                     document.getElementById("l_usuario").value=""
@@ -360,6 +364,8 @@
         TOPS_list.graficar()
     }
     function verPelicula(id_pelicula){
+        document.getElementById("INFOPELI").style.display="block";
+        document.getElementById("section_pelis").style.display="none";
         console.log("estoy viendo:" + id_pelicula)
         //BUSCANDO LA INFORMACIÓN DE LA PELICULA
         var pelicula= MoviesList.buscarPeli(id_pelicula)
@@ -442,7 +448,8 @@
         
         
         <center>
-        <button type="button" class="btn btn-warning"  value="${id_pelicula}" onclick="AlquilarPelicula(${id_pelicula})" >Alquilar</button>
+        <button type="button" class="btn btn-dark"  value="${id_pelicula}" onclick="AlquilarPelicula(${id_pelicula})" >Alquilar</button>
+        <button type="button" class="btn btn-dark"   onclick="volverpelis()" >Volver</button>
         </center>
 
         
@@ -650,6 +657,11 @@
 
     function g_actores() {
         ActoresList.obtener_codigo_Graphviz()
+    }
+
+    function volverpelis() {
+        document.getElementById("INFOPELI").style.display="none";
+        document.getElementById("section_pelis").style.display="block";
     }
 
     
