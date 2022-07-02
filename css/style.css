@@ -18,10 +18,22 @@ body {
   width: 100%;
 }
 
+.contenedor-completo2{
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.contenedor.primario2{
+ width: 100%; 
+}
+.contenedor.secundario2{
+  width: 100%;
+}
+
 #scroll{
-  height: 700px;
-  width: 700px;
-  overflow: auto;
+  width: 30em;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 #lienzo{

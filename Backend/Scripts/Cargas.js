@@ -1,13 +1,21 @@
-    
-    
     document.getElementById("cargar_pelis").onclick = loadfile;
-    document.getElementById("cargar_act").onclick = loadfile1;
-    document.getElementById("cargar_client").onclick = loadfile2;
+    document.getElementById("cargar_act").onclick = loadfile2;
+    document.getElementById("cargar_client").onclick =  loadfile1;
     document.getElementById("cargar_cat").onclick = loadfile3;
     
     document.getElementById("logearse").onclick= logear;
+
+    document.getElementById("inorden_actores").onclick= in_actores;
+    document.getElementById("preorden_actores").onclick= pre_actores;
+    document.getElementById("postorden_actores").onclick= post_actores;
     
-    
+    document.getElementById("ascendente_peli").onclick= ordena1;
+    document.getElementById("descendete_peli").onclick= ordena2;
+
+    document.getElementById("graph_movies").onclick = g_movies;
+    document.getElementById("graph_client").onclick = g_client;
+    document.getElementById("graph_actores").onclick =  g_actores;
+    document.getElementById("graph_categoria").onclick = g_categoria;
 
     let archivo;
     var usuarioactual="";
@@ -64,27 +72,11 @@
         //var x= document.getElementById("content");
         //x.innerHTML+=text
         //console.log(text)
-        console.log(jsonData)
+        //console.log(jsonData)
 
-        var  contenido_f = document.getElementById("t_fantasy")
+        var  contenido_f = document.getElementById("t_movie")
         contenido_f.innerHTML= ` `
 
-        var  contenido_t = document.getElementById("t_thriller")
-        contenido_t.innerHTML= ` `
-
-
-        var  opciones = document.getElementById("libro_seleccionado")
-        var  opciones2 = document.getElementById("libro_ejemplar")
-        opciones.style.display="block";
-        opciones2.style.display="block";
-        opciones2.innerHTML=`
-        
-        <option selected>Selecciona un libro</option>
-      ` 
-        opciones.innerHTML=`
-        
-            <option selected>Selecciona un libro</option>
-          ` 
           
         for (let index = 0; index < jsonData.length; index++) {
             //VERIFICAR QUE ID SEA ÚNICO
@@ -102,43 +94,23 @@
                     jsonData[index].descripcion,
                     jsonData[index].puntuacion_star,
                     jsonData[index].precio_Q
-                )    
-            }
-
-            
-
-            /** 
-            opciones.innerHTML+=`
-            <option value="${jsonData[index].nombre_libro}">
-            ${jsonData[index].nombre_libro}</option>` 
-            opciones2.innerHTML+=`
-            <option value="${jsonData[index].nombre_libro}">
-            ${jsonData[index].nombre_libro}</option>` 
-            
-            if (jsonData[index].categoria=="Fantasia") {
+                ) 
                 contenido_f.innerHTML+=`<tr>
-                    <th scope="row">${index}</th>
-                    <td>${jsonData[index].isbn}</td>
-                    <td>${jsonData[index].nombre_libro}</td>
-                    <td>${jsonData[index].nombre_autor}</td>
-                    <td>${jsonData[index].categoria}</td>
+                    <th scope="row">${jsonData[index].id_pelicula}</th>
+                    <td>${jsonData[index].nombre_pelicula}</td>
+                    <td>${jsonData[index].descripcion}</td>
+                    <td><button type="button" class="btn btn-dark" value="${jsonData[index].id_pelicula}" onclick="verPelicula(${jsonData[index].id_pelicula})">Información</button></td>
+                    <td><button type="button"class="btn btn-warning" value="${jsonData[index].id_pelicula}" onclick="AlquilarPelicula(${jsonData[index].id_pelicula})">Alquilar</button></td>
+                    <td>${jsonData[index].precio_Q}</td>
                     
                     
                     
-                    </tr>`
-               
-                
-
-            } */
-            
-            
+                    </tr>`   
+            }
+ 
         }
-        
         MoviesList.inorden()
-
-            
-
-            
+     
         //Autores_BST.agregar()
         alert("Carga de Peliculas exitosa :)")
         
@@ -166,6 +138,7 @@
                 jsonData[index].correo,
                 jsonData[index].contrasenia,
                 jsonData[index].telefono)
+
         }
         ClientList.mostrar()
         
@@ -179,6 +152,9 @@
         //x.innerHTML+=text
         //console.log(text)
         console.log(jsonData)
+
+        var  contenido_f = document.getElementById("t_actores")
+        contenido_f.innerHTML= ` `
         for (let index = 0; index < jsonData.length; index++) {
 
             console.log("__________ DATOS DEL ACTORES "+(index+1)+" __________")
@@ -192,7 +168,17 @@
                 jsonData[index].nombre_actor,
                 jsonData[index].correo,
                 jsonData[index].descripcion
-                )
+            )
+
+            contenido_f.innerHTML+=`<tr>
+                    <th scope="row">${jsonData[index].dni}</th>
+                    <td>${jsonData[index].nombre_actor}</td>
+                    <td>${jsonData[index].descripcion}</td>
+                    <td>${jsonData[index].correo}</td>
+                    
+                    
+                    
+            </tr>`   
         }
         ActoresList.inorden()
         alert("Carga de ACTORES exitosa :)")
@@ -206,6 +192,8 @@
         //x.innerHTML+=text
         //console.log(text)
         console.log(jsonData)
+        var  contenido_f = document.getElementById("t_categoria")
+        contenido_f.innerHTML= ` `
         for (let index = 0; index < jsonData.length; index++) {
 
             console.log("__________ DATOS DE CATEGORIA "+(index+1)+" __________")
@@ -215,11 +203,18 @@
 
             if (CategoriasList.isExiste(jsonData[index].id_categoria)!=true) {
                 CategoriasList.insertarHash(res,jsonData[index].id_categoria,jsonData[index].company)
+                contenido_f.innerHTML+=`<tr>
+                <th scope="row">${jsonData[index].id_categoria}</th>
+                <td>${jsonData[index].company}</td>
+                
+                
+                
+                 </tr>`  
+            
             }
 
            
         }
-        CategoriasList.graficar_hash()
 
         alert("Carga de usuarios exitosa :)")
         
@@ -291,164 +286,8 @@
         Autores_BST.obtener_codigo_Graphviz()
     }
 
-    function mostrarbubblesort() {
-        ListBooks.bubbleSort()
-        document.getElementById("content").value=
-        ` bubbleSort() {
-            var t=0;
-            do{
-                var act = this.first;//aux esta en el primer nodo
-                var sig = act.next;//esta en el siguiente nodo 
-                while(act.next != null)
-                {
-                    if(act.nombre_libro.replace(/ /g, "") > sig.nombre_libro.replace(/ /g, ""))
-                    {
-                        //guardo valores actuales
-                        var auxnombrelib =act.nombre_libro; 
-                        var auxisbn= act.isbn;
-                        var auxpaginas= act.paginas;
-                        var auxcantidad = act.cantidad;
-                        var auxautor = act.nombre_autor;
-                        var auxcategoria = act.categoria;
-                        
-                        
-                        //se hace cambio de actual==siguiente
-                        act.nombre_libro= sig.nombre_libro;
-                        act.isbn= sig.isbn;
-                        act.paginas= sig.paginas;
-                        act.cantidad = sig.cantidad;
-                        act.nombre_autor = sig.nombre_autor;
-                        act.categoria= sig.categoria;
     
-                        //se hace seteo de siguiente == actual
-                        sig.nombre_libro= auxnombrelib;
-                        sig.isbn= auxisbn
-                        act.paginas=auxpaginas;
-                        sig.cantidad = auxcantidad;
-                        sig.nombre_autor = auxautor;
-                        sig.categoria=auxcategoria
-                        
-                        
-                        //pasa a la siguiente comparación
-                        act = act.next;
-                        sig = sig.next;
-                    }
-                    else
-                    { 
-                        //pasa a la siguiente comparación
-                        act = act.next;
-                        sig = sig.next;
-                    }
-                }
-                t++;
-            }while(t<=this.size);
-            this.mostrar()
-        }`
-    }
-
-    function mostrarquicksort() {
-        ListBooks.Quicksort(ListBooks.first,ListBooks.last)
-        ListBooks.mostrar()
-        document.getElementById("content").value=
-        `Quicksort( start,  end) {
-            if (start == null || start == end || start == end.next)
-                return;
-     
     
-            var pivot_prev = this.paritionLast(start, end);
-            this.Quicksort(start, pivot_prev);
-     
-           
-            if (pivot_prev != null && pivot_prev == start)
-                this.Quicksort(pivot_prev.next, end);
-     
-            
-            else if (pivot_prev != null && pivot_prev.next != null)
-                this.Quicksort(pivot_prev.next.next, end);
-    
-            
-        }
-
-        paritionLast( start,  end) {
-            if (start == end || start == null || end == null)
-                return start;
-     
-            var pivot_prev = start;
-            var curr = start;
-    
-            var pivot_nombre_lib =end.nombre_libro
-            var pivot_cantidad = end.cantidad;
-            var pivot_nombre_autor = end.nombre_autor;
-            var pivot_isbn =end.isbn
-            var pivot_paginas = end.paginas;
-            var pivot_categoria = end.categoria;
-            
-    
-            while (start != end) {
-                if (start.nombre_libro.replace(/ /g, "") < pivot_nombre_lib.replace(/ /g, "")) {
-                    
-                    pivot_prev = curr;
-    
-                    var aux_nombrelib = curr.nombre_libro
-                    var aux_cantidad = curr.cantidad;
-                    var aux_autor = curr.nombre_autor
-                    var aux_isbn=curr.isbn
-                    var aux_categoria= curr.categoria
-                    var aux_paginas = curr.paginas
-                    
-    
-                    curr.nombre_libro=start.nombre_libro;
-                    curr.cantidad = start.cantidad;
-                    curr.nombre_autor=start.nombre_autor;
-                    curr.isbn=start.isbn;
-                    curr.paginas = start.paginas;
-                    curr.categoria=start.categoria;
-    
-                    
-                    start.nombre_libro = aux_nombrelib
-                    start.cantidad = aux_cantidad;
-                    start.nombre_autor= aux_autor;
-                    start.isbn = aux_isbn
-                    start.paginas = aux_paginas;
-                    start.categoria= aux_categoria;
-                    
-                    curr = curr.next;
-                }
-                start = start.next;
-            }
-     
-            
-            var aux_nombrelib2 = curr.nombre_libro
-            var aux_cantidad2 = curr.cantidad;
-            var aux_autor2 = curr.nombre_autor
-            var aux_isbn2 = curr.isbn;
-            var aux_paginas2 = curr.paginas
-            var aux_categoria2 = curr.categoria
-    
-            curr.nombre_libro=pivot_nombre_lib
-            curr.cantidad = pivot_cantidad;
-            curr.nombre_autor= pivot_nombre_autor;
-            curr.isbn=pivot_isbn
-            curr.paginas = pivot_paginas;
-            curr.categoria= pivot_categoria;
-            
-    
-            end.nombre_libro = aux_nombrelib2;
-            end.cantidad = aux_cantidad2;
-            end.nombre_autor = aux_autor2;
-            end.isbn = aux_isbn2;
-            end.paginas = aux_paginas2;
-            end.categoria = aux_categoria2;
-            
-     
-            
-            return pivot_prev;
-        }
-
-
-        `
-    }
-
     function correrlista() {
         var a = document.getElementById("content_libros")
 
@@ -520,7 +359,300 @@
         TOPS_list.mostrar_solo3()
         TOPS_list.graficar()
     }
+    function verPelicula(id_pelicula){
+        console.log("estoy viendo:" + id_pelicula)
+        //BUSCANDO LA INFORMACIÓN DE LA PELICULA
+        var pelicula= MoviesList.buscarPeli(id_pelicula)
+        var titulo= document.getElementById("INFOPELI")
+        var des= document.getElementById("Des_PELI")
+        console.log("la puntuacion es : "+ pelicula.puntuacion_star)
+
+        titulo.innerHTML= ` <center>
+        <h4 class="my-5 display-3 fw-bold ls-tight">
+             
+          <span class="text-primary">${pelicula.nombre_pelicula}</span>
+        </h4>
+      </center>
+      
+      <div class="p-3 mb-2 bg-dark text-white"  >
+
+        <div class="contenedor-completo2">
+                <div class="contenedor-primario2" >
+                    
+                        
+                            <center>
+                
+                                <span >${pelicula.descripcion}</span>
+                    
+                            </center>
+                            
+                            <br>
+                            
+                            <div class="p-3 mb-2 bg-dark text-white" id="pt"> 
+                            <h3>Puntuacion ->> ${pelicula.puntuacion_star} </h3>
+                            </div>
+                            
+                            
+                            <div class="p-3 mb-2 bg-dark text-white" > 
+                            <h3>Precio ->> Q ${pelicula.precio_Q} </h3>
+                            </div>
+                        
+                
+                            
+                    
+                    
+                </div>
+                <div class="contenedor-secundario2" >
+                        <CENTER>
+                            <div class="p-3 mb-2 bg-dark text-white"> 
+                            <h3>Comentarios </h3></div>
+
+
+                            <br> 
+                            <div class="p-3 mb-2 bg-dark text-white" id="comen_peli" >
+                            </div>
+
+
+
+                        
+
+                        </CENTER>
+            
+                </div>
+
+                <div class="form-outline mb-4" >
+                    <input type="text" id="puntuacion" class="form-control form-control-lg" />
+                    <label class="form-label" for="form2Example17">¿Qué puntuación le das?</label>
+                    <br>
+                    <button type="button" class="btn btn-success"  value="${id_pelicula}" onclick="Puntuar_peli(${id_pelicula})" >Guardar</button>
+                    <br>
+                    <br>
+                    <input type="text" id="comeent" class="form-control form-control-lg" />
+                    <label class="form-label" for="form2Example17">¿Qué opinas de la película?</label>
+                    <br>
+                    <button type="button" class="btn btn-success"  value="${id_pelicula}" onclick="Comentar_peli(${id_pelicula})" >Publicar</button>
+                
+                </div>
+                
+
+                
+                
+            
+            </div>
+        
+        
+        <center>
+        <button type="button" class="btn btn-warning"  value="${id_pelicula}" onclick="AlquilarPelicula(${id_pelicula})" >Alquilar</button>
+        </center>
+
+        
+      </div>`
+
+      var contenido = document.getElementById("comen_peli")
+      var pelicula = MoviesList.buscarPeli(id_pelicula)
+      contenido.innerHTML= ``
+      for (let index = 0; index < pelicula.comentarios.length; index++) {
+          var user = pelicula.comentarios[index].nombre;
+          var c= pelicula.comentarios[index].coment
+          contenido.innerHTML+= `<h4 >
+          ${user} : 
+          ${c}</h4>`
+      }
+    }
+
+    function AlquilarPelicula(id_pelicula) {
+        console.log("estoy Alquilando:" + id_pelicula)
+    }
+
+    function Puntuar_peli(id_pelicula){
+        var nuevo= parseInt(document.getElementById("puntuacion").value) 
+        var x= document.getElementById("pt")
+        
+        if (document.getElementById("puntuacion").value!="") {
+            if (nuevo>=0 && nuevo<=5) {
+                var pelicula= MoviesList.buscarPeli(id_pelicula)
+                pelicula.puntuacion_star=nuevo
+                x.innerHTML= ` <h3>Puntuacion = ${nuevo} </h3>`
+                alert("gracias por tu calificacion")
+               
+                document.getElementById("puntuacion").value=""
+            }else{
+                alert("fuera de rango")
+            }
+        } else {
+            alert("campo vacio")
+        }
+
+        
+    }
     
+    function Comentar_peli(id_pelicula) {
+        var comentario = document.getElementById("comeent").value
+        var contenido = document.getElementById("comen_peli")
+    
+        if (document.getElementById("comeent").value!="") {
+            var usuario = usuarioactual;
+            var pelicula = MoviesList.buscarPeli(id_pelicula)
+            var com = new Comentario(usuario,comentario)
+            pelicula.comentarios.push(com)
+    
+            contenido.innerHTML= ``
+            for (let index = 0; index < pelicula.comentarios.length; index++) {
+                var user = pelicula.comentarios[index].nombre;
+                var c= pelicula.comentarios[index].coment
+                contenido.innerHTML+= `<h4 >
+                ${user} : 
+                ${c}</h4>`
+            }
+    
+            alert("gracias por tu opinión :)")
+            document.getElementById("comeent").value=""
+        } else {
+            alert("campo vacio")
+        }
+       
+       
+    }
+
+    function in_actores(){
+        var  contenido_f = document.getElementById("t_actores")
+        contenido_f.innerHTML= ` `
+        in_actores_recursive(ActoresList.raiz,contenido_f)
+        ActoresList.inorden()
+    }
+    function in_actores_recursive(raiz,contenido_f){
+        if (raiz) {
+            in_actores_recursive(raiz.izquierdo,contenido_f)
+            
+            contenido_f.innerHTML+=`<tr>
+                    <th scope="row">${raiz.dni}</th>
+                    <td>${raiz.nombre_actor}</td>
+                    <td>${raiz.descripcion}</td>
+                    <td>${raiz.correo}</td>
+                    
+                    
+                    
+            </tr>`
+            in_actores_recursive(raiz.derecho,contenido_f)
+        }
+    }
+
+    function pre_actores(){
+        var  contenido_f = document.getElementById("t_actores")
+        contenido_f.innerHTML= ` `
+        pre_actores_recursive(ActoresList.raiz,contenido_f)
+        ActoresList.pre_orden()
+    }
+    function pre_actores_recursive(raiz,contenido_f){
+        if (raiz) {
+            
+            
+            contenido_f.innerHTML+=`<tr>
+                    <th scope="row">${raiz.dni}</th>
+                    <td>${raiz.nombre_actor}</td>
+                    <td>${raiz.descripcion}</td>
+                    <td>${raiz.correo}</td>
+                    
+                    
+                    
+            </tr>`
+            pre_actores_recursive(raiz.izquierdo,contenido_f)
+            pre_actores_recursive(raiz.derecho,contenido_f)
+        }
+    }
+
+    function post_actores(){
+        var  contenido_f = document.getElementById("t_actores")
+        contenido_f.innerHTML= ` `
+        post_actores_recursive(ActoresList.raiz,contenido_f)
+        ActoresList.post_orden()
+    }
+    function post_actores_recursive(raiz,contenido_f){
+        if (raiz) {
+            post_actores_recursive(raiz.izquierdo,contenido_f)
+            post_actores_recursive(raiz.derecho,contenido_f)
+            contenido_f.innerHTML+=`<tr>
+                    <th scope="row">${raiz.dni}</th>
+                    <td>${raiz.nombre_actor}</td>
+                    <td>${raiz.descripcion}</td>
+                    <td>${raiz.correo}</td>
+                    
+                    
+                    
+            </tr>`
+            
+        }
+    }
+
+
+    function ordena1(){
+        var  contenido_f = document.getElementById("t_movie")
+        contenido_f.innerHTML= ` `
+        in_movies_recursive(MoviesList.raiz,contenido_f)
+        MoviesList.inorden()
+    }
+    function in_movies_recursive(raiz,contenido_f){
+        if (raiz) {
+            in_movies_recursive(raiz.prev,contenido_f)
+            
+            contenido_f.innerHTML+=`<tr>
+                    <th scope="row">${raiz.id_pelicula}</th>
+                    <td>${raiz.nombre_pelicula}</td>
+                    <td>${raiz.descripcion}</td>
+                    <td><button type="button" class="btn btn-dark" value="${raiz.id_pelicula}" onclick="verPelicula(${raiz.id_pelicula})">Información</button></td>
+                    <td><button type="button"class="btn btn-warning" value="${raiz.id_pelicula}" onclick="AlquilarPelicula(${raiz.id_pelicula})">Alquilar</button></td>
+                    <td>${raiz.precio_Q}</td>
+                    
+                    
+                    
+                    </tr>`  
+            in_movies_recursive(raiz.next,contenido_f)
+        }
+    }
+
+
+    function ordena2(){
+        var  contenido_f = document.getElementById("t_movie")
+        contenido_f.innerHTML= ` `
+        in2_movies_recursive(MoviesList.raiz,contenido_f)
+        
+    }
+    function in2_movies_recursive(raiz,contenido_f){
+        if (raiz) {
+            in2_movies_recursive(raiz.next,contenido_f)
+            
+            contenido_f.innerHTML+=`<tr>
+                    <th scope="row">${raiz.id_pelicula}</th>
+                    <td>${raiz.nombre_pelicula}</td>
+                    <td>${raiz.descripcion}</td>
+                    <td><button type="button" class="btn btn-dark" value="${raiz.id_pelicula}" onclick="verPelicula(${raiz.id_pelicula})">Información</button></td>
+                    <td><button type="button"class="btn btn-warning" value="${raiz.id_pelicula}" onclick="AlquilarPelicula(${raiz.id_pelicula})">Alquilar</button></td>
+                    <td>${raiz.precio_Q}</td>
+                    
+                    
+                    
+                    </tr>`  
+            in2_movies_recursive(raiz.prev,contenido_f)
+        }
+    }
+
+    function g_movies() {
+        MoviesList.obtener_codigo_Graphviz()
+    }
+
+    function g_client() {
+        ClientList.graficar()
+    }
+
+    function g_categoria() {
+        CategoriasList.graficar_hash()
+    }
+
+    function g_actores() {
+        ActoresList.obtener_codigo_Graphviz()
+    }
+
+
     
     
     

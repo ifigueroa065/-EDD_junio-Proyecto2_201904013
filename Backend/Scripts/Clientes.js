@@ -60,15 +60,15 @@ class Queue {
 
     graficar(){
         var codigodot = "digraph G {\n"
-        codigodot +="node[ style=filled ,color=\"#E1E1A8\", shape=box];";
-        codigodot +="label=\"" + "COLA" + "\";\n";
+        codigodot +="node[ style=filled ,color=\"#819BE1\", shape=box];";
+        codigodot +="label=\"" + "LISTA DE CIENTES" + "\";\n";
         var temporal = this.first
         var conexiones ="";
         var nodos ="";
         var numnodo= 0;
         
         while (temporal != null) {
-            nodos+=  "N" + numnodo + "[label=\"" + temporal.nombre_usuario + "\" ];\n"
+            nodos+=  "N" + numnodo + "[label=\"" + temporal.nombre_usuario +"\n"+ "dpi:"+ temporal.dpi + "\" ];\n"
             if(temporal.next != null){
                 var auxnum = numnodo+1
                 conexiones += "N" + numnodo + " -> N" + auxnum + ";\n"
@@ -82,9 +82,8 @@ class Queue {
         codigodot += "{rank=same;\n"+conexiones+"\n}\n}"
         console.log(codigodot)
         
-        d3.select("#lienzo").graphviz()
-            .width(1200)
-            .height(500)
+        d3.select("#scroll").graphviz()
+            .fit(true)
             .renderDot(codigodot)
     }
 

@@ -219,9 +219,8 @@ class HashTable {
             codigodot += nodosHijos;
             codigodot += "\n}"
             console.log(codigodot)
-            d3.select("#lienzo_orto").graphviz()
-                .width(2000)
-                .height(2000)
+            d3.select("#scroll").graphviz()
+                .fit(true)
                 .renderDot(codigodot)
         }
     }

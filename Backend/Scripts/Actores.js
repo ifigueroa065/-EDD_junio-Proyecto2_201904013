@@ -33,19 +33,19 @@ class NodoB{
         var  texto = ""
 
         if (this.izquierdo == null && this.derecho == null) {
-            texto+="node"+this.valor+"[label=\""+this.valor+"\"];\n"
+            texto+="node"+this.dni+"[label=\""+"DNI: " + this.dni+"\n" +"\n nombre :"+this.nombre_actor+"\"];\n"
         } else {
-            texto+="node"+this.valor+"[label=\"<C0>|"+this.valor+"|<C1>\"];\n"
+            texto+="node"+this.dni+"[label=\"<C0>|"+"DNI: "+ this.dni+"\n" + "\n nombre :"+this.nombre_actor+"|<C1>\"];\n"
         }
 
         if (this.izquierdo!=null) {
             texto+=this.izquierdo.codigo_interno()
-            texto+="node"+this.valor+":C0->node"+this.izquierdo.valor+";\n"
+            texto+="node"+this.dni+":C0->node"+this.izquierdo.dni+";\n"
         }
 
         if (this.derecho!=null) {
             texto+=this.derecho.codigo_interno()
-            texto+="node"+this.valor+":C1->node"+this.derecho.valor+";\n"
+            texto+="node"+this.dni+":C1->node"+this.derecho.dni+";\n"
         }
         
         return texto
@@ -56,18 +56,18 @@ class NodoB{
         var  texto = ""
         texto+="digraph G { rankdir=TB; "
         texto+="\n"
-        texto+="node [shape = record, style=filled, fillcolor=seashell2];\n"
+        texto+="node [shape = record,color=\"#819BE1\", style=filled];\n"
         texto+=this.codigo_interno()
         texto+="}\n"
-        d3.select("#lienzo").graphviz()
-            .width(1200)
-            .height(500)
+        console.log(texto)
+        d3.select("#scroll").graphviz()
+            .fit(true)
             .renderDot(texto)
     }
 
     graficar2(){
         var  texto = ""
-        texto+="digraph G { rankdir=TB ; node [shape = record, style=filled, fillcolor=seashell2];\n"
+        texto+="digraph G { rankdir=TB ; node [shape = record,color=\"#819BE1\", style=filled];\n"
         texto+=this.texto_graphviz()
         texto+="}\n"
         return console.log(texto)
@@ -97,9 +97,9 @@ class Arbol_Binario{
         } else {
             //Verificar si es mayor o menor
             if (dni<raiz.dni) {
-                raiz.izquierdo=this.agregar_recursive(dni,raiz.izquierdo)
+                raiz.izquierdo=this.agregar_recursive(dni,nombre_actor,correo,descripcion,raiz.izquierdo)
             } else {
-                raiz.derecho=this.agregar_recursive(dni,raiz.derecho)
+                raiz.derecho=this.agregar_recursive(dni,nombre_actor,correo,descripcion,raiz.derecho)
             }
         }
         return raiz
@@ -161,6 +161,8 @@ class Arbol_Binario{
 
         return this.raiz.graficar2()
     }
+
+   
     
     
          

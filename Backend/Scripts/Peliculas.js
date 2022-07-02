@@ -1,10 +1,18 @@
+class Comentario{
+    constructor(nombre,coment){
+        this.nombre=nombre
+        this.coment=coment
+    }
+}
+
 class Nodo_AVL {
     constructor(id_pelicula,nombre_pelicula,descripcion,puntuacion_star,precio_Q){
         this.id_pelicula=id_pelicula;
         this.nombre_pelicula=nombre_pelicula
         this.descripcion=descripcion
-        this.puntuacion=puntuacion_star
+        this.puntuacion_star=puntuacion_star
         this.precio_Q=precio_Q
+        this.comentarios = []
         this.prev = null;
         this.next = null;
         this.altura = 0;
@@ -16,19 +24,19 @@ class Nodo_AVL {
         var  texto = ""
 
         if (this.prev == null && this.next == null) {
-            texto+="node"+this.valor+"[label=\""+this.valor+"\"];\n"
+            texto+="node"+this.id_pelicula+"[label=\""+"ID: "+ this.id_pelicula+"\n"+" nombre :"+this.nombre_pelicula+"\"];\n"
         } else {
-            texto+="node"+this.valor+"[label=\"<C0>|"+this.valor+"|<C1>\"];\n"
+            texto+="node"+this.id_pelicula+"[label=\"<C0>|"+"ID: "+ this.id_pelicula+"\n"+" nombre :"+this.nombre_pelicula+"|<C1>\"];\n"
         }
 
         if (this.prev!=null) {
             texto+=this.prev.codigo_interno()
-            texto+="node"+this.valor+":C0->node"+this.prev.valor+";\n"
+            texto+="node"+this.id_pelicula+":C0->node"+this.prev.id_pelicula+";\n"
         }
 
         if (this.next!=null) {
             texto+=this.next.codigo_interno()
-            texto+="node"+this.valor+":C1->node"+this.next.valor+";\n"
+            texto+="node"+this.id_pelicula+":C1->node"+this.next.id_pelicula+";\n"
         }
         
         return texto
@@ -43,9 +51,8 @@ class Nodo_AVL {
         texto+=this.codigo_interno()
         texto+="}\n"
         console.log(texto)
-        d3.select("#lienzo").graphviz()
-            .width(1200)
-            .height(500)
+        d3.select("#scroll").graphviz()
+            .fit(true)
             .renderDot(texto)
     }
 }
@@ -175,6 +182,8 @@ class AVL {
             console.log("____ DATOS DE LA PELÍCULA "+" __")
             console.log("id_pelicula=" +nodo.id_pelicula);
             console.log("nombre_pelicula=" +nodo.nombre_pelicula);
+            console.log("puntuacion=" +nodo.puntuacion_star);
+
             this.in_orden(nodo.next);    
         }
     }
@@ -230,6 +239,42 @@ class AVL {
             
         
     }
+
+    rebuscarPeli(id_pelicula){
+        if (this.raiz==null) {
+            return null
+          }
+      
+          var aux = this.raiz
+          if (aux.id_pelicula === id_pelicula) {
+            return aux
+          }
+      
+          while(aux) {
+            // si encontramos el nodo con el valor
+            // paramos de iterar.
+            if (aux.id_pelicula === id_pelicula) {
+              break
+            }
+            // seguimos buscando a la derecha
+            if (aux.id_pelicula < id_pelicula) {
+              aux = aux.next
+            } else if (aux.id_pelicula > id_pelicula) {
+              // seguimos buscando a la izquierda
+              aux = aux.prev
+            }
+          }
+          // retornamos el nodo encontrado.
+          // si no encontramos el nodo con el valor
+          // aux, toma el valor null.
+          return aux
+    }
+
+    buscarPeli(id_pelicula){
+        var res= this.rebuscar(id_pelicula)
+        return res
+    }
+
     
     
 }
