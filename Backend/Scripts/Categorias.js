@@ -101,7 +101,7 @@ class Cola {
             
             rank+="N"+_NumPadre+";"
             while (aux != null) {
-                nodos += "NN" + (_NumPadre + num.toString()) + "[label=\"" + aux.id_categoria + "\"];\n"
+                nodos += "NN" + (_NumPadre + num.toString()) + "[label=\"" +"id :"+ aux.id_categoria + "\n"+" company: "+ aux.company+"\"];\n"
                 rank+="NN"+_NumPadre + num.toString()+";"
                 if (aux.next != null) {
                     nodos += "NN" + (_NumPadre + num.toString()) + " -> NN" + (_NumPadre + (num + 1).toString()) + ";\n"
@@ -203,7 +203,7 @@ class HashTable {
             var nodosHijos = ""
             while (aux!=null) {
                 num= Sha256.hash((aux.value).toString(),Utf8.decode)
-                nodos += "N" + num + "[label=\"" + aux.value + "\"];\n"
+                nodos += "N" + num + "[label=\""+"index : " + aux.value + "\"];\n"
                 if (aux.next!=null) {
                     conexiones += "N" + num + " -> N" + (Sha256.hash((aux.next.value).toString(),Utf8.decode)) + ";\n"    
                 }
